@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Object对象 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Object对象">
+  <meta name="description" content="一、Object对象简介 声明：本文都是使用JDK1.8  我们学Java的知道，Java是一门面向对象的语言。无论在Java中出现什么，都可以认为它是对象(除了八大基本数据类型。当然了，八大基本数据类型也能装箱成为对象)：  而Object就是这些对象的最高级别的，所有的Java对象都隐式地继承了Object对象(不用显示写extends继承) 所有的Java对象都拥有Object默认的方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Object对象">
 <meta property="og:url" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/index.html">
 <meta property="og:site_name" content="ZDF之博客">
-<meta property="og:description" content="Object对象">
+<meta property="og:description" content="一、Object对象简介 声明：本文都是使用JDK1.8  我们学Java的知道，Java是一门面向对象的语言。无论在Java中出现什么，都可以认为它是对象(除了八大基本数据类型。当然了，八大基本数据类型也能装箱成为对象)：  而Object就是这些对象的最高级别的，所有的Java对象都隐式地继承了Object对象(不用显示写extends继承) 所有的Java对象都拥有Object默认的方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cobject%E7%B1%BB%5CObject%E5%AF%B9%E8%B1%A1.assets%5C640.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cobject%E7%B1%BB%5CObject%E5%AF%B9%E8%B1%A1.assets%5Cimage-20200714103617723.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cobject%E7%B1%BB%5CObject%E5%AF%B9%E8%B1%A1.assets%5C640.webp">
 <meta property="article:published_time" content="2020-07-16T03:24:29.376Z">
-<meta property="article:modified_time" content="2020-07-16T03:30:45.828Z">
+<meta property="article:modified_time" content="2020-07-16T03:36:27.304Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/16/Object%E5%AF%B9%E8%B1%A1/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cobject%E7%B1%BB%5CObject%E5%AF%B9%E8%B1%A1.assets%5C640.jpg">
@@ -195,7 +195,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Object对象"><a href="#Object对象" class="headerlink" title="Object对象"></a>Object对象</h2><a id="more"></a>
+        <a id="more"></a>
 
 <h1 id="一、Object对象简介"><a href="#一、Object对象简介" class="headerlink" title="一、Object对象简介"></a>一、Object对象简介</h1><blockquote>
 <p>声明：本文都是使用JDK1.8</p>
@@ -529,7 +529,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Object对象"><span class="toc-number">1.</span> <span class="toc-text">Object对象</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Object对象简介"><span class="toc-number"></span> <span class="toc-text">一、Object对象简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二、equals和hashCode方法"><span class="toc-number">1.</span> <span class="toc-text">二、equals和hashCode方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1equals和hashCode方法重写"><span class="toc-number">1.1.</span> <span class="toc-text">2.1equals和hashCode方法重写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2String实现的equals和hashCode方法"><span class="toc-number">1.2.</span> <span class="toc-text">2.2String实现的equals和hashCode方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、toString方法"><span class="toc-number"></span> <span class="toc-text">三、toString方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、clone方法"><span class="toc-number"></span> <span class="toc-text">四、clone方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1clone用法"><span class="toc-number">1.</span> <span class="toc-text">4.1clone用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2clone疑问进一步学习protected"><span class="toc-number">2.</span> <span class="toc-text">4.2clone疑问进一步学习protected</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、wait和notify方法"><span class="toc-number"></span> <span class="toc-text">五、wait和notify方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1为什么wait和notify在Object方法上？"><span class="toc-number">1.</span> <span class="toc-text">5.1为什么wait和notify在Object方法上？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2notify方法调用后，会发生什么？"><span class="toc-number">2.</span> <span class="toc-text">5.2notify方法调用后，会发生什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3sleep和wait有什么区别？"><span class="toc-number">3.</span> <span class="toc-text">5.3sleep和wait有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、finalize-方法"><span class="toc-number"></span> <span class="toc-text">六、finalize()方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、总结"><span class="toc-number"></span> <span class="toc-text">七、总结</span></a>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、Object对象简介"><span class="toc-number">1.</span> <span class="toc-text">一、Object对象简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#二、equals和hashCode方法"><span class="toc-number">1.1.</span> <span class="toc-text">二、equals和hashCode方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1equals和hashCode方法重写"><span class="toc-number">1.1.1.</span> <span class="toc-text">2.1equals和hashCode方法重写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2String实现的equals和hashCode方法"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.2String实现的equals和hashCode方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、toString方法"><span class="toc-number">2.</span> <span class="toc-text">三、toString方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、clone方法"><span class="toc-number">3.</span> <span class="toc-text">四、clone方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1clone用法"><span class="toc-number">3.1.</span> <span class="toc-text">4.1clone用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2clone疑问进一步学习protected"><span class="toc-number">3.2.</span> <span class="toc-text">4.2clone疑问进一步学习protected</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、wait和notify方法"><span class="toc-number">4.</span> <span class="toc-text">五、wait和notify方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1为什么wait和notify在Object方法上？"><span class="toc-number">4.1.</span> <span class="toc-text">5.1为什么wait和notify在Object方法上？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2notify方法调用后，会发生什么？"><span class="toc-number">4.2.</span> <span class="toc-text">5.2notify方法调用后，会发生什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3sleep和wait有什么区别？"><span class="toc-number">4.3.</span> <span class="toc-text">5.3sleep和wait有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、finalize-方法"><span class="toc-number">5.</span> <span class="toc-text">六、finalize()方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、总结"><span class="toc-number">6.</span> <span class="toc-text">七、总结</span></a></li></ol>
                     </div>
                 </span>
             </div>

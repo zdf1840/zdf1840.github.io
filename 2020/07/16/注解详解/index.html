@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>注解详解 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="注解详解">
+  <meta name="description" content="注解详解@Component@Component（把普通pojo实例化到spring容器中，相当于配置文件中的  &lt;bean id&#x3D;&quot;&quot; class&#x3D;&quot;&quot;&#x2F;&gt;） 官方的原话是：带此注解的类看为组件，当使用基于注解的配置和类路径扫描的时候，这些类就会被实例化。泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="注解详解">
 <meta property="og:url" content="http://yoursite.com/2020/07/16/%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="ZDF之博客">
-<meta property="og:description" content="注解详解">
+<meta property="og:description" content="注解详解@Component@Component（把普通pojo实例化到spring容器中，相当于配置文件中的  &lt;bean id&#x3D;&quot;&quot; class&#x3D;&quot;&quot;&#x2F;&gt;） 官方的原话是：带此注解的类看为组件，当使用基于注解的配置和类路径扫描的时候，这些类就会被实例化。泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@S">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-16T03:23:20.594Z">
-<meta property="article:modified_time" content="2020-07-16T03:31:38.824Z">
+<meta property="article:modified_time" content="2020-07-16T03:37:06.773Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
   
@@ -179,9 +179,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="注解详解"><a href="#注解详解" class="headerlink" title="注解详解"></a>注解详解</h2><a id="more"></a>
+        <a id="more"></a>
 
-<h4 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h4><p>@Component（把普通pojo实例化到spring容器中，相当于配置文件中的  <code>&lt;bean id=&quot;&quot; class=&quot;&quot;/&gt;</code>）</p>
+<h2 id="注解详解"><a href="#注解详解" class="headerlink" title="注解详解"></a>注解详解</h2><h4 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h4><p>@Component（把普通pojo实例化到spring容器中，相当于配置文件中的  <code>&lt;bean id=&quot;&quot; class=&quot;&quot;/&gt;</code>）</p>
 <p>官方的原话是：带此注解的类看为组件，当使用基于注解的配置和类路径扫描的时候，这些类就会被实例化。泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类</p>
 <p><strong>源码：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;java.lang.annotation.ElementType.TYPE&#125;)</span><br><span class="line">          <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">          <span class="meta">@Documented</span></span><br><span class="line">          <span class="keyword">public</span> <span class="meta">@interface</span> Component &#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//这个值可能作为逻辑组件(即类)的名称，在自动扫描的时候转化为spring bean，即相当&lt;bean id="" class="" /&gt;中的id</span></span><br><span class="line">                  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>

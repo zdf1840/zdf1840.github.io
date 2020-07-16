@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java基础 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="①Java 基础部分（基本语法，Java 特性等）">
+  <meta name="description" content="①Java 基础部分（基本语法，Java 特性等）1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？Object 的hashcode 方法是本地方法，也就是用c 语言或c++ 实现的，该方法直接返回对象的内存地址。 2、&#x3D;&#x3D;比较的是什么？若对一个类不重写，它的equals()方法是如何比较的？ 两个对象是引用  比较地址  两边是基本类型  比较数值是否相">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java基础">
 <meta property="og:url" content="http://yoursite.com/2020/07/16/java%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="ZDF之博客">
-<meta property="og:description" content="①Java 基础部分（基本语法，Java 特性等）">
+<meta property="og:description" content="①Java 基础部分（基本语法，Java 特性等）1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？Object 的hashcode 方法是本地方法，也就是用c 语言或c++ 实现的，该方法直接返回对象的内存地址。 2、&#x3D;&#x3D;比较的是什么？若对一个类不重写，它的equals()方法是如何比较的？ 两个对象是引用  比较地址  两边是基本类型  比较数值是否相">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/java%E5%9F%BA%E7%A1%80/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cjava%E5%9F%BA%E7%A1%80.assets%5Cimage-20200706151547181.png">
 <meta property="article:published_time" content="2020-07-16T03:24:14.344Z">
-<meta property="article:modified_time" content="2020-07-16T03:30:06.412Z">
+<meta property="article:modified_time" content="2020-07-16T03:35:38.020Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/16/java%E5%9F%BA%E7%A1%80/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5Cjava%E5%9F%BA%E7%A1%80.assets%5Cimage-20200706151547181.png">
@@ -181,9 +181,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="①Java-基础部分（基本语法，Java-特性等）"><a href="#①Java-基础部分（基本语法，Java-特性等）" class="headerlink" title="①Java 基础部分（基本语法，Java 特性等）"></a>①Java 基础部分（基本语法，Java 特性等）</h3><a id="more"></a>
+        <a id="more"></a>
 
-<h4 id="1、Object-若不重写hashCode-的话，hashCode-如何计算出来的？"><a href="#1、Object-若不重写hashCode-的话，hashCode-如何计算出来的？" class="headerlink" title="1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？"></a>1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？</h4><p>Object 的hashcode 方法是本地方法，也就是用c 语言或c++ 实现的，该方法直接返回对象的内存地址。</p>
+<h3 id="①Java-基础部分（基本语法，Java-特性等）"><a href="#①Java-基础部分（基本语法，Java-特性等）" class="headerlink" title="①Java 基础部分（基本语法，Java 特性等）"></a>①Java 基础部分（基本语法，Java 特性等）</h3><h4 id="1、Object-若不重写hashCode-的话，hashCode-如何计算出来的？"><a href="#1、Object-若不重写hashCode-的话，hashCode-如何计算出来的？" class="headerlink" title="1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？"></a>1、Object 若不重写hashCode()的话，hashCode()如何计算出来的？</h4><p>Object 的hashcode 方法是本地方法，也就是用c 语言或c++ 实现的，该方法直接返回对象的内存地址。</p>
 <h4 id="2、-比较的是什么？若对一个类不重写，它的equals-方法是如何比较的？"><a href="#2、-比较的是什么？若对一个类不重写，它的equals-方法是如何比较的？" class="headerlink" title="2、==比较的是什么？若对一个类不重写，它的equals()方法是如何比较的？"></a>2、==比较的是什么？若对一个类不重写，它的equals()方法是如何比较的？</h4><ol>
 <li><p>两个对象是引用</p>
 <p> 比较地址</p>
