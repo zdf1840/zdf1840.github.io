@@ -6,15 +6,37 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>ZDF之博客</title>
+  <title>MySQL/MySQL底层原理详解 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ZDF之博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、Mysql 索引底层数据结构选型 1. 哈希表（Hash）从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？ 因为考虑到数据检索有一个常用手段就是范围查找，比如以下这个 SQL 语句： 1select \* from user where id \&gt;3;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL&#x2F;MySQL底层原理详解">
+<meta property="og:url" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="ZDF之博客">
+<meta property="og:description" content="一、Mysql 索引底层数据结构选型 1. 哈希表（Hash）从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？ 因为考虑到数据检索有一个常用手段就是范围查找，比如以下这个 SQL 语句： 1select \* from user where id \&gt;3;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-1cc416d59d4c44cf029e9e2103347bb8_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-46e7e44e8ba85e606d68ea9644092d08_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-60cea4af963b156ee5f40030977ab77c_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-4c39b8eacc6879d661ddb1ed4190aff2_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-0dad51645707e973b152e44e4b7479c5_720w.jpg">
+<meta property="og:image" content="https://picb.zhimg.com/80/v2-f508590121487b595c4ad4fa83d8aa15_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-f335bdb3e922a5f334416f557df20848_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-0fdff8f9a516383548cd0e636f593e52_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-7d5e34c698b1e4192ad0ff93c2c897d0_720w.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190430100803346.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzOTI1ODY5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-e4e24288dca3ef02735c41a2a3a69556_720w.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-0df18cce6c3871fa9e4ac99050bf1692_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-8a065d6e21a2adbf06d2e6b5dd02e969_720w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-d9a03627e8e1319e46f42e6963c35e30_720w.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-6e16b355e3d0f05ed8bfb0f7c71de8f1_720w.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png">
+<meta property="article:published_time" content="2020-07-19T06:42:17.956Z">
+<meta property="article:modified_time" content="2020-07-17T10:37:58.508Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-1cc416d59d4c44cf029e9e2103347bb8_720w.jpg">
   
     <link rel="alternative" href="/atom.xml" title="ZDF之博客" type="application/atom+xml">
   
@@ -155,276 +177,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-POI-EasyExcel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-MySQL/MySQL底层原理详解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/POI-EasyExcel/">POI-EasyExcel</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/POI-EasyExcel/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:44:46.632Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>转载自狂神</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/POI-EasyExcel/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JWT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/JWT/">JWT</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/JWT/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:43:56.995Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>带你解密JWT的内部秘密</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/JWT/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JUC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/JUC/">JUC</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/JUC/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:43:32.326Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>走进多线程</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/JUC/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单点登录" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/">单点登录</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:42:34.885Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>单点登录的流程</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL/MySQL底层原理详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/">MySQL/MySQL底层原理详解</a>
+    <h1 class="article-title" itemprop="name">
+      MySQL/MySQL底层原理详解
     </h1>
   
 
@@ -578,6 +338,37 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechart.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -585,16 +376,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          单点登录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/19/Cookie&Session/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Cookie&amp;Session</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -609,342 +468,52 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Cookie&amp;Session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/Cookie&Session/">Cookie&amp;Session</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/Cookie&Session/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:42:04.953Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Cookie&amp;和Session  一对好基友</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/Cookie&Session/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、Mysql-索引底层数据结构选型"><span class="toc-number">1.</span> <span class="toc-text">一、Mysql 索引底层数据结构选型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-哈希表（Hash）"><span class="toc-number">1.1.</span> <span class="toc-text">1. 哈希表（Hash）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-二叉查找树-BST"><span class="toc-number">1.2.</span> <span class="toc-text">2. 二叉查找树(BST)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-AVL-树和红黑树"><span class="toc-number">1.3.</span> <span class="toc-text">3. AVL 树和红黑树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-B-树"><span class="toc-number">1.4.</span> <span class="toc-text">4. B 树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-B-树"><span class="toc-number">1.5.</span> <span class="toc-text">5. B+树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、Innodb-引擎和-Myisam-引擎的实现"><span class="toc-number">2.</span> <span class="toc-text">二、Innodb 引擎和 Myisam 引擎的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM与InnoDB-的区别（8个不同点）"><span class="toc-number">2.1.</span> <span class="toc-text">MyISAM与InnoDB 的区别（8个不同点）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#区别："><span class="toc-number">2.1.1.</span> <span class="toc-text">区别：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何选择："><span class="toc-number">2.1.2.</span> <span class="toc-text">如何选择：</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
   
-    <article id="post-AuthenticationManager验证原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/AuthenticationManager%E9%AA%8C%E8%AF%81%E5%8E%9F%E7%90%86/">AuthenticationManager验证原理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/AuthenticationManager%E9%AA%8C%E8%AF%81%E5%8E%9F%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:41:53.384Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>不断完善总结</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/AuthenticationManager%E9%AA%8C%E8%AF%81%E5%8E%9F%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Object对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/">Object对象</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:24:29.376Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Object详解</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java基础" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/java%E5%9F%BA%E7%A1%80/">java基础</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/java%E5%9F%BA%E7%A1%80/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:24:14.344Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>前言 不断总结是走向成功的捷径！</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/java%E5%9F%BA%E7%A1%80/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-反射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/%E5%8F%8D%E5%B0%84/">反射</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/%E5%8F%8D%E5%B0%84/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:23:56.623Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>反射笔记</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/%E5%8F%8D%E5%B0%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="MySQL/MySQL底层原理详解" data-title="MySQL/MySQL底层原理详解" data-url="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -967,8 +536,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
