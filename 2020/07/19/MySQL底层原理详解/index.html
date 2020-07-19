@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>MySQL/MySQL底层原理详解 | ZDF之博客</title>
+  <title>MySQL底层原理详解 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、Mysql 索引底层数据结构选型 1. 哈希表（Hash）从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？ 因为考虑到数据检索有一个常用手段就是范围查找，比如以下这个 SQL 语句： 1select \* from user where id \&gt;3;">
+  <meta name="description" content="MySQL底层数据结构选择及底层引擎详解">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL&#x2F;MySQL底层原理详解">
-<meta property="og:url" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="MySQL底层原理详解">
+<meta property="og:url" content="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="ZDF之博客">
-<meta property="og:description" content="一、Mysql 索引底层数据结构选型 1. 哈希表（Hash）从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？ 因为考虑到数据检索有一个常用手段就是范围查找，比如以下这个 SQL 语句： 1select \* from user where id \&gt;3;">
+<meta property="og:description" content="MySQL底层数据结构选择及底层引擎详解">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-1cc416d59d4c44cf029e9e2103347bb8_720w.jpg">
 <meta property="og:image" content="https://pic3.zhimg.com/80/v2-46e7e44e8ba85e606d68ea9644092d08_720w.jpg">
@@ -30,10 +30,10 @@
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-8a065d6e21a2adbf06d2e6b5dd02e969_720w.jpg">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-d9a03627e8e1319e46f42e6963c35e30_720w.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-6e16b355e3d0f05ed8bfb0f7c71de8f1_720w.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png">
-<meta property="article:published_time" content="2020-07-19T06:42:17.956Z">
-<meta property="article:modified_time" content="2020-07-17T10:37:58.508Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png">
+<meta property="article:published_time" content="2020-07-19T06:59:58.201Z">
+<meta property="article:modified_time" content="2020-07-19T07:01:47.807Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-1cc416d59d4c44cf029e9e2103347bb8_720w.jpg">
@@ -177,20 +177,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MySQL/MySQL底层原理详解" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MySQL底层原理详解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      MySQL/MySQL底层原理详解
+      MySQL底层原理详解
     </h1>
   
 
         
-        <a href="/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:42:17.956Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
+        <a href="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2020-07-19T06:59:58.201Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
 </a>
         
       </header>
@@ -198,8 +198,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<h2 id="一、Mysql-索引底层数据结构选型"><a href="#一、Mysql-索引底层数据结构选型" class="headerlink" title="一、Mysql 索引底层数据结构选型"></a>一、Mysql 索引底层数据结构选型</h2></blockquote>
-<h3 id="1-哈希表（Hash）"><a href="#1-哈希表（Hash）" class="headerlink" title="1. 哈希表（Hash）"></a>1. 哈希表（Hash）</h3><p>从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？</p>
+<p>MySQL底层数据结构选择及底层引擎详解</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="一、Mysql-索引底层数据结构选型"><a href="#一、Mysql-索引底层数据结构选型" class="headerlink" title="一、Mysql 索引底层数据结构选型"></a>一、Mysql 索引底层数据结构选型</h2><h3 id="1-哈希表（Hash）"><a href="#1-哈希表（Hash）" class="headerlink" title="1. 哈希表（Hash）"></a>1. 哈希表（Hash）</h3><p>从算法时间复杂度分析来看，哈希算法时间复杂度为 O（1），哈希索引只需要计算一次就可以获取到对应的数据，检索速度非常快。但是 Mysql 并没有采取哈希作为其底层算法，这是为什么呢？</p>
 <p>因为考虑到数据检索有一个常用手段就是<strong>范围查找</strong>，比如以下这个 SQL 语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select \* from user where id \&gt;3;</span><br></pre></td></tr></table></figure>
 
@@ -295,8 +298,8 @@
 <li><p><strong>InnoDB是聚集索引，</strong>使用B+Tree作为索引结构，<strong>数据文件是和（主键）索引绑在一起的</strong>（表数据文件本身就是按B+Tree组织的一个索引结构），<strong>必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。</strong>因此，主键不应该过大，因为主键太大，其他索引也都会很大。</p>
 <p><strong>MyISAM是非聚集索引，</strong>也是使用B+Tree作为索引结构，<strong>索引和数据文件是分离的</strong>，索引保存的是数据文件的指针。主键索引和辅助索引是独立的。</p>
 <p>也就是说：<strong>InnoDB的B+树主键索引的叶子节点就是数据文件，辅助索引的叶子节点是主键的值；而MyISAM的B+树主键索引和辅助索引的叶子节点都是数据文件的地址指针。</strong></p>
-<p><img src="/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png" alt></p>
-<p><img src="/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png" alt></p>
+<p><img src="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png" alt></p>
+<p><img src="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png" alt></p>
 </li>
 <li><p><strong>InnoDB不保存表的具体行数</strong>，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）；</p>
 <p><strong>那么为什么InnoDB没有了这个变量呢？</strong></p>
@@ -423,7 +426,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -437,18 +440,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          单点登录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/19/Cookie&Session/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Cookie&amp;Session</div>
+    <a href="/2020/07/19/POI-EasyExcel/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">POI-EasyExcel</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -489,7 +483,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="MySQL/MySQL底层原理详解" data-title="MySQL/MySQL底层原理详解" data-url="http://yoursite.com/2020/07/19/MySQL/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/"></div>
+	<div class="ds-thread" data-thread-key="MySQL底层原理详解" data-title="MySQL底层原理详解" data-url="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
