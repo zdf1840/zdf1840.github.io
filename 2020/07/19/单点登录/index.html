@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95.assets%5Cv2-57c69a386fce8585e27401b8bc266211_720w.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95.assets%5Cimage-20200718083659233.png">
 <meta property="article:published_time" content="2020-07-19T06:42:34.885Z">
-<meta property="article:modified_time" content="2020-07-19T06:55:26.252Z">
+<meta property="article:modified_time" content="2020-07-23T12:52:34.522Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95.assets%5Cv2-827194ca2c84052da90e22bf1802e12b_720w.jpg">
@@ -193,7 +193,6 @@
 <ul>
 <li><p><strong>登录</strong>：将用户信息保存在Session对象中</p>
 </li>
-<li><ul>
 <li><p>如果在Session对象中能查到，说明已经登录</p>
 <ul>
 <li><p>如果在Session对象中查不到，说明没登录（或者已经退出了登录）</p>
@@ -201,8 +200,6 @@
 
 
 
-</li>
-</ul>
 </li>
 </ul>
 </li>
@@ -223,9 +220,7 @@
 </ul>
 <p>我们可以将登录功能<strong>单独抽取</strong>出来，做成一个子系统。</p>
 <p><img src="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95.assets%5Cv2-57c69a386fce8585e27401b8bc266211_720w.jpg" alt="v2-57c69a386fce8585e27401b8bc266211_720w"></p>
-<blockquote>
-<h3 id="单点登录三种常见方式："><a href="#单点登录三种常见方式：" class="headerlink" title="单点登录三种常见方式："></a>单点登录三种常见方式：</h3></blockquote>
-<ol>
+<h3 id="单点登录三种常见方式："><a href="#单点登录三种常见方式：" class="headerlink" title="单点登录三种常见方式："></a>单点登录三种常见方式：</h3><ol>
 <li><p><strong>session广播机制实现</strong></p>
 <ul>
 <li><p>比如我在订单功能登录了，把登录信息存到了session对象中</p>
@@ -283,7 +278,8 @@
 <li>将Token保存在SessionStroage中（不依赖Cookie就没有跨域的问题了）</li>
 </ol>
 <p><img src="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95.assets%5Cimage-20200718083659233.png" alt="image-20200718083659233"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;登录的方法</span><br><span class="line">     submitLogin() &#123;</span><br><span class="line">       &#x2F;&#x2F;第一步 调用接口进行登录，返回token字符串</span><br><span class="line">       loginApi.submitLoginUser(this.user) </span><br><span class="line">          .then(response &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;第二步 获取token字符串放到cookie里面</span><br><span class="line">            &#x2F;&#x2F;第一个参数cookie名称，第二个参数值，第三个参数作用范围</span><br><span class="line">            cookie.set(&#39;guli_token&#39;,response.data.data.token,&#123;domain: &#39;localhost&#39;&#125;)</span><br><span class="line">            </span><br><span class="line">             &#x2F;&#x2F;第四步 调用接口 根据token获取用户信息，为了首页面显示</span><br><span class="line">             loginApi.getLoginUserInfo()</span><br><span class="line">               .then(response &#x3D;&gt; &#123;</span><br><span class="line">                 this.loginInfo &#x3D; response.data.data.userInfo</span><br><span class="line">                 &#x2F;&#x2F;获取返回用户信息，放到cookie里面</span><br><span class="line">                 cookie.set(&#39;guli_ucenter&#39;,this.loginInfo,&#123;domain: &#39;localhost&#39;&#125;)</span><br><span class="line"></span><br><span class="line">                 &#x2F;&#x2F;跳转页面</span><br><span class="line">                 window.location.href &#x3D; &quot;&#x2F;&quot;;</span><br><span class="line">               &#125;)</span><br><span class="line">          &#125;)</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>第三步：把cookie放到HTTP的请求头中，并使用https对请求链接进行加密传输</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;登录的方法</span><br><span class="line">     submitLogin() &#123;</span><br><span class="line">       &#x2F;&#x2F;第一步 调用接口进行登录，返回token字符串</span><br><span class="line">       loginApi.submitLoginUser(this.user) </span><br><span class="line">          .then(response &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;第二步 获取token字符串放到cookie里面</span><br><span class="line">            &#x2F;&#x2F;第一个参数cookie名称，第二个参数值，第三个参数作用范围</span><br><span class="line">            cookie.set(&#39;guli_token&#39;,response.data.data.token,&#123;domain: &#39;localhost&#39;&#125;)</span><br><span class="line">            </span><br><span class="line">             &#x2F;&#x2F;第四步 调用接口 根据token获取用户信息，为了首页面右上角显示登录状态</span><br><span class="line">             loginApi.getLoginUserInfo()</span><br><span class="line">               .then(response &#x3D;&gt; &#123;</span><br><span class="line">                 this.loginInfo &#x3D; response.data.data.userInfo</span><br><span class="line">                 &#x2F;&#x2F;获取返回用户信息，放到cookie里面</span><br><span class="line">                 cookie.set(&#39;guli_ucenter&#39;,this.loginInfo,&#123;domain: &#39;localhost&#39;&#125;)</span><br><span class="line"></span><br><span class="line">                 &#x2F;&#x2F;跳转页面</span><br><span class="line">                 window.location.href &#x3D; &quot;&#x2F;&quot;;</span><br><span class="line">               &#125;)</span><br><span class="line">          &#125;)</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
 
 <p>第三步：前端拦截器</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http request 拦截器</span></span><br><span class="line">service.interceptors.request.use(</span><br><span class="line">  config =&gt; &#123;</span><br><span class="line">  <span class="comment">//判断token里面是否有名称是guli_token数据	</span></span><br><span class="line">  <span class="keyword">if</span> (cookie.get(<span class="string">'guli_token'</span>)) &#123;</span><br><span class="line">    <span class="comment">//把获取的cookie值放到header里面</span></span><br><span class="line">    config.headers[<span class="string">'token'</span>] = cookie.get(<span class="string">'guli_token'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="keyword">return</span> config</span><br><span class="line">  &#125;,</span><br><span class="line">  err =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>

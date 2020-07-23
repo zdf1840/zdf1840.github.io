@@ -16,7 +16,7 @@
 <meta property="og:description" content="注解总结，不清楚的时候可以查询，持续更新！">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-16T03:23:20.594Z">
-<meta property="article:modified_time" content="2020-07-16T03:56:34.240Z">
+<meta property="article:modified_time" content="2020-07-22T13:12:49.543Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
   
@@ -184,7 +184,7 @@
 </blockquote>
 <a id="more"></a>
 
-<h2 id="注解详解"><a href="#注解详解" class="headerlink" title="注解详解"></a>注解详解</h2><h4 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h4><p>@Component（把普通pojo实例化到spring容器中，相当于配置文件中的  <code>&lt;bean id=&quot;&quot; class=&quot;&quot;/&gt;</code>）</p>
+<h2 id="注解详解"><a href="#注解详解" class="headerlink" title="注解详解"></a>注解详解</h2><h4 id="Component"><a href="#Component" class="headerlink" title="@Component"></a>@Component</h4><p>@Component（把普通pojo实例转化到spring容器中，相当于配置文件中的  <code>&lt;bean id=&quot;&quot; class=&quot;&quot;/&gt;</code>）</p>
 <p>官方的原话是：带此注解的类看为组件，当使用基于注解的配置和类路径扫描的时候，这些类就会被实例化。泛指各种组件，就是说当我们的类不属于各种归类的时候（不属于@Controller、@Services等的时候），我们就可以使用@Component来标注这个类</p>
 <p><strong>源码：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;java.lang.annotation.ElementType.TYPE&#125;)</span><br><span class="line">          <span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line">          <span class="meta">@Documented</span></span><br><span class="line">          <span class="keyword">public</span> <span class="meta">@interface</span> Component &#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">//这个值可能作为逻辑组件(即类)的名称，在自动扫描的时候转化为spring bean，即相当&lt;bean id="" class="" /&gt;中的id</span></span><br><span class="line">                  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">value</span><span class="params">()</span></span>;</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
@@ -192,19 +192,19 @@
 <p><strong>案例：</strong></p>
 <ol>
 <li><p>不指定bean的名称，默认为类名首字母小写university</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">University</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">          to <span class="keyword">do</span> sthing...</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> 获取bean方式：</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ctx  = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"./config/applicationContext.xml"</span>);     </span><br><span class="line">University ust = (University) ctx.getBean(``<span class="string">"university"</span>);</span><br></pre></td></tr></table></figure>
-
-
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">University</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">          to <span class="keyword">do</span> sthing...</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
+<p>获取bean方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ctx  = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"./config/applicationContext.xml"</span>);     </span><br><span class="line">University ust = (University) ctx.getBean(``<span class="string">"university"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
 <ol start="2">
 <li><p>指定bean的名称</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span>(<span class="string">"university1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">University</span> </span>&#123;to <span class="keyword">do</span> sthing...&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">获取bean方式：</span><br><span class="line">    </span><br><span class="line">    java</span><br><span class="line">    ApplicationContext ctx  = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"./config/applicationContext.xml"</span>);      </span><br><span class="line">    University ust = (University) ctx.getBean(<span class="string">"university1"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">获取bean方式：</span><br><span class="line">    ApplicationContext ctx  = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"./config/applicationContext.xml"</span>);      </span><br><span class="line">    University ust = (University) ctx.getBean(<span class="string">"university1"</span>);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -221,7 +221,7 @@
 <h4 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h4><ul>
 <li>@Controller用于标记在一个类上，使用它标记的类就是一个SpringMvc Controller对象，分发处理器会扫描使用该注解的类的方法，并检测该方法是否使用了@RequestMapping注解。</li>
 <li><strong>@Controller只是定义了一个控制器类，而使用@RequestMapping注解的方法才是处理请求的处理器。</strong></li>
-<li>@Controller标记在一个类上还不能真正意义上说它就是SpringMvc的控制器，因为这个时候Spring还不认识它，这个时候需要把这个控制器交给Spring来管理。有两种方式可以管理：</li>
+<li>@Controller标记在一个类上还不能真正意义上说它就是SpringMVC的控制器，因为这个时候Spring还不认识它，需要把这个控制器交给Spring来管理。有两种方式可以管理：</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--基于注解的装配--&gt;</span><br><span class="line">&lt;!--方式一--&gt;</span><br><span class="line">&lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.HelloWorld"</span>/&gt;</span><br><span class="line">&lt;!--方式二--&gt;</span><br><span class="line">&lt;!--路径写到controller的上一层--&gt;</span><br><span class="line">&lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">"com"</span>/&gt;</span><br></pre></td></tr></table></figure>
 
@@ -231,15 +231,15 @@
 <h4 id="Repository持久层"><a href="#Repository持久层" class="headerlink" title="@Repository持久层"></a>@Repository持久层</h4><p>此注解式持久层组件，用于标注数据访问组件，即DAO组件<br>DAO层，在DaoImpl类上面注解</p>
 <h4 id="RestController"><a href="#RestController" class="headerlink" title="@RestController"></a>@RestController</h4><ol>
 <li><p>Controller, RestController的共同点</p>
-<p>  都是用来表示Spring某个类的是否可以接收HTTP请求</p>
+<p>  都是用来表示Spring某个类是否可以接收HTTP请求</p>
 </li>
 <li><p>Controller, RestController的不同点</p>
-<p>@Controller只是定义了一个控制器类</p>
-<p> @RestController：是@Controller和@ResponseBody的结合体，两个标注合并起来的作用。</p>
+<p> @Controller只是定义了一个控制器类</p>
+<p> @RestController：是<strong>@Controller和@ResponseBody的结合体，</strong>两个标注合并起来的作用。</p>
 </li>
 </ol>
 <ul>
-<li><p>如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面，配置的视图解析器InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。例如：本来应该到success.jsp页面的，则其显示success.</p>
+<li><p>如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面，配置的视图解析器InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。例如：本来应该到success.jsp页面的，则其显示success。<strong>要搭配@RequestMapping使用</strong></p>
 </li>
 <li><p>如果需要返回到指定页面，则需要用 @Controller配合视图解析器InternalResourceViewResolver才行。</p>
 </li>
@@ -247,8 +247,12 @@
 </li>
 </ul>
 <h4 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h4><p>通过RequestMapping注解映射请求URL  </p>
-<p>@RequestMapping(“/devmgr”)注解映射请求地址</p>
-<p> @RequestMapping是一个用来处理请求地址映射的注解，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。</p>
+<p> @RequestMapping(“/devmgr”)注解映射请求地址</p>
+<p> @RequestMapping是一个<strong>用来处理请求地址映射的注解</strong></p>
+<p><strong>可用于类或方法上。</strong></p>
+<p>用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径</p>
+<p>用于方法上，表示在类的父路径下追加方法上注解中的地址将会访问到该方法</p>
+<p><strong>此处需注意@RequestMapping用在类上可以没用，但是用在方法上必须有</strong>。</p>
 <p>相当于Servlet中在web.xml中配置：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servletName<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>ServletClass<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>servletName<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>url<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -314,9 +318,9 @@
 
 <p> <strong>注意事项：</strong></p>
 <p>　　在使用@Autowired时，首先在容器中查询对应类型的bean</p>
-<p>　　　　如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据</p>
-<p>　　　　如果查询的结果不止一个，那么@Autowired会根据名称来查找。</p>
-<p>　　　　如果查询的结果为空，那么会抛出异常。解决方法是使用required=false</p>
+<p>　　　　<strong>如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据</strong></p>
+<p>　　　　<strong>如果查询的结果不止一个，那么@Autowired会根据名称来查找。</strong></p>
+<p>　　　　<strong>如果查询的结果为空，那么会抛出异常。解决方法是使用required=false</strong></p>
 <p>举例说明：</p>
 <p> 在上面例子中，我们再定一个类来实现UserRepository接口</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.proc.bean.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserJdbcImps</span> <span class="keyword">implements</span> <span class="title">UserRepository</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"UserJdbcImps save"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -335,27 +339,29 @@
 <li>@Resource后面没有任何内容时，默认通过name属性去匹配bean，找不到再按type去匹配</li>
 <li>指定了name或者type则根据指定的类型去匹配bean，任何一个不匹配都将报错</li>
 </ol>
-<p>然后，区分一下@Autowired和@Resource两个注解的区别：</p>
+<p><strong>区分一下@Autowired和@Resource两个注解的区别：</strong></p>
 <ol>
 <li>@Autowired默认按照byType方式进行bean匹配，@Resource默认按照byName方式进行bean匹配</li>
 <li>@Autowired是Spring的注解，@Resource是J2EE的注解</li>
 </ol>
-<h4 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h4><p>@ResponseBody的作用其实是将java对象转为json格式的数据。</p>
+<h4 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h4><p>@ResponseBody的作用其实是将java对象转为json格式的数据。<strong>通俗讲就是通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。</strong></p>
 <p><strong>注：Java中没有什么json不json，json格式是对于前端而言的，在Java中都是字符串</strong></p>
-<p>@responseBody注解的作用是将controller的方法返回的对象通过适当的转换器转换为指定的格式之后，写入到response对象的body区，通常用来返回JSON数据或者是XML数据。<br>注意：在使用此注解之后不会再走视图处理器，而是直接将数据写入到输入流中，他的效果等同于通过response对象输出指定格式的数据。</p>
-<p>@ResponseBody是作用在方法上的，@ResponseBody 表示该方法的返回结果直接写入 HTTP response body 中，一般在异步获取数据时使用【也就是AJAX】。<br><strong>注意：</strong>在使用 @RequestMapping后，返回值通常解析为跳转路径，但是加上 @ResponseBody 后返回结果不会被解析为跳转路径，而是直接写入 HTTP response body 中。 比如异步获取 json 数据，加上 @ResponseBody 后，会直接返回 json 数据。@RequestBody 将 HTTP 请求正文插入方法中，使用适合的 HttpMessageConverter 将请求体写入某个对象。</p>
+<p><strong>@Responsebody 注解表示该方法的返回的结果直接写入 HTTP 响应正文（ResponseBody）中，一般在异步获取数据时使用，通常是在使用 @RequestMapping 后，返回值通常解析为跳转路径，加上 @Responsebody 后返回结果不会被解析为跳转路径，而是直接写入HTTP 响应正文中。</strong><br><strong>作用：</strong><br>该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。<br><strong>使用时机：</strong><br>返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//后台 Controller类中对应的方法：</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/login.do"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">login</span><span class="params">(String name, String password, HttpSession session)</span> </span>&#123;</span><br><span class="line">	user = userService.checkLogin(name, password);</span><br><span class="line">	session.setAttribute(<span class="string">"user"</span>, user);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> JsonResult(user);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">@RequestBody是作用在形参列表上，用于将前台发送过来固定格式的数据【xml格式 或者 json等】封装为对应的 JavaBean 对象，</span></span><br><span class="line"><span class="comment">封装时使用到的一个对象是系统默认配置的 HttpMessageConverter进行解析，然后封装到形参上。</span></span><br><span class="line"><span class="comment">如上面的登录后台代码可以改为：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/login.do"</span>)</span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">login</span><span class="params">(@RequestBody User loginUuser, HttpSession session)</span> </span>&#123;</span><br><span class="line">	user = userService.checkLogin(loginUser);</span><br><span class="line">	session.setAttribute(<span class="string">"user"</span>, user);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> JsonResult(user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h4><p>@RequestBody 注解是将 HTTP 请求正文插入方法中，使用适合的 HttpMessageConverter 将请求体写入某个对象。<br><strong>作用：</strong></p>
+<h4 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h4><p>@RequestBody 注解是将 HTTP 请求正文插入方法中，使用适合的 HttpMessageConverter 将请求体写入某个对象。<strong>就是在域名跳转的时候可以自己传参数比如id，而不会被解析为跳转的路径</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//条件查询带分页的方法</span></span><br><span class="line">    <span class="meta">@ApiOperation</span>(value = <span class="string">"条件查询带分页的方法"</span>)</span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"pageTeacherCondition/&#123;current&#125;/&#123;limit&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">pageTeacherCondition</span><span class="params">(@PathVariable <span class="keyword">long</span> current, @PathVariable <span class="keyword">long</span> limit,</span></span></span><br><span class="line"><span class="function"><span class="params">                                  @RequestBody(required = <span class="keyword">false</span>)</span>TeacherQuery teacherQuery)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>作用：</strong></p>
 <ol>
 <li><p>该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； </p>
 </li>
 <li><p>HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。</p>
 </li>
 </ol>
-<p>使用时机：</p>
+<p><strong>使用时机：</strong></p>
 <ol>
 <li>GET、POST方式提时， 根据request header Content-Type的值来判断:</li>
 </ol>

@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>ZDF之博客</title>
+  <title>集合专题 | ZDF之博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ZDF之博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="HashMap源码阅读1.HashMap的初始容量1234&#x2F;**     * The default initial capacity - MUST be a power of two.     *&#x2F;    static final int DEFAULT_INITIAL_CAPACITY &#x3D; 1 &lt;&lt; 4; &#x2F;&#x2F; aka 16   HashMap初始容量是16 初始容量必须是2的指数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集合专题">
+<meta property="og:url" content="http://yoursite.com/2020/07/21/%E9%9B%86%E5%90%88%E4%B8%93%E9%A2%98/index.html">
 <meta property="og:site_name" content="ZDF之博客">
+<meta property="og:description" content="HashMap源码阅读1.HashMap的初始容量1234&#x2F;**     * The default initial capacity - MUST be a power of two.     *&#x2F;    static final int DEFAULT_INITIAL_CAPACITY &#x3D; 1 &lt;&lt; 4; &#x2F;&#x2F; aka 16   HashMap初始容量是16 初始容量必须是2的指数">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190615101255704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzQ1Nzcz,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019061510140289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzQ1Nzcz,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-07-21T00:28:54.219Z">
+<meta property="article:modified_time" content="2020-07-21T02:55:42.705Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190615101255704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzQ1Nzcz,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="ZDF之博客" type="application/atom+xml">
   
@@ -155,34 +162,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-反射" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-集合专题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/%E5%8F%8D%E5%B0%84/">反射</a>
+    <h1 class="article-title" itemprop="name">
+      集合专题
     </h1>
   
 
         
-        <a href="/2020/07/16/%E5%8F%8D%E5%B0%84/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:23:56.623Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+        <a href="/2020/07/21/%E9%9B%86%E5%90%88%E4%B8%93%E9%A2%98/" class="archive-article-date">
+  	<time datetime="2020-07-21T00:28:54.219Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>反射笔记</p>
-</blockquote>
-        
+        <h2 id="HashMap源码阅读"><a href="#HashMap源码阅读" class="headerlink" title="HashMap源码阅读"></a>HashMap源码阅读</h2><h3 id="1-HashMap的初始容量"><a href="#1-HashMap的初始容量" class="headerlink" title="1.HashMap的初始容量"></a>1.HashMap的初始容量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The default initial capacity - MUST be a power of two.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>HashMap初始容量是<strong>16</strong></li>
+<li>初始容量必须是<strong>2的指数</strong></li>
+</ol>
+<h3 id="2-HashMap的最大容量"><a href="#2-HashMap的最大容量" class="headerlink" title="2.HashMap的最大容量"></a>2.HashMap的最大容量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * The maximum capacity, used if a higher value is implicitly specified</span></span><br><span class="line"><span class="comment">    * by either of the constructors with arguments.</span></span><br><span class="line"><span class="comment">    * MUST be a power of two &lt;= 1&lt;&lt;30.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+
+<p>由源码可知，如果任意一个带有参数的构造函数隐式指定更高的值，则使用该最大容量。 必须是两个&lt;= 1 &lt;&lt; 30的幂。</p>
+<h3 id="3-装载因子"><a href="#3-装载因子" class="headerlink" title="3.装载因子"></a>3.装载因子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The load factor used when none specified in constructor.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br></pre></td></tr></table></figure>
+
+<p>默认的装载因子是0.75，什么是加载因子（负载因子/装载因子）？<br>用于表示哈希表中元素填满的程度。<br>冲突的机会越大，则查找的成本越高。反之，查找的成本越低，从而查找的时间越少。</p>
+<p>加载因子也叫作扩容因子，用来判断什么时候进行扩容，假设加载因子为0.75，HashMap的初始容量为16，当HashMap中有16 * 0.75 = 12个容量时，HashMap就会进行扩容。</p>
+<p>如果加载因子越大，扩容发生的频率就会比较低，占用空间比较小，但是发生hash冲突的几率会提升，对元素操作时间会增加，运行效率降低；</p>
+<p>如果加载因子太小，那么表中的数据将过于稀疏（很多空间还没用，就开始扩容了），对空间造成严重浪费；</p>
+<p>而且因为容量默认为2的次方，当加载因子为0.75时，容量和加载因子的乘积为整数。</p>
+<p>所以系统默认加载因子取了0.5 -1 之间的0.75.</p>
+<h3 id="4-由链表转换成树的阈值"><a href="#4-由链表转换成树的阈值" class="headerlink" title="4.由链表转换成树的阈值"></a>4.由链表转换成树的阈值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The bin count threshold for using a tree rather than list for a</span></span><br><span class="line"><span class="comment">     * bin.  Bins are converted to trees when adding an element to a</span></span><br><span class="line"><span class="comment">     * bin with at least this many nodes. The value must be greater</span></span><br><span class="line"><span class="comment">     * than 2 and should be at least 8 to mesh with assumptions in</span></span><br><span class="line"><span class="comment">     * tree removal about conversion back to plain bins upon</span></span><br><span class="line"><span class="comment">     * shrinkage.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+
+<p>HashMap在JDK1.7是以数组加链表的形式组成，JDK1.8后新增了红黑树结构，当链表大于8并且数组容量大于64时，链表结构会转成红黑树结构。</p>
+<p>JDK1.8 之所以会加入红黑树是因为当链表过长是会严重影响HashMap的性能，而红黑树具有快速增删改查的特点。</p>
+<h3 id="5-由树转换成链表的阈值"><a href="#5-由树转换成链表的阈值" class="headerlink" title="5.由树转换成链表的阈值"></a>5.由树转换成链表的阈值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The bin count threshold for untreeifying a (split) bin during a</span></span><br><span class="line"><span class="comment">     * resize operation. Should be less than TREEIFY_THRESHOLD, and at</span></span><br><span class="line"><span class="comment">     * most 6 to mesh with shrinkage detection under removal.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br></pre></td></tr></table></figure>
+
+<p>当执行resize操作时，当桶中bin的数量少于UNTREEIFY_THRESHOLD时使用链表来代替树。默认值是6</p>
+<h3 id="6-转换成树的最小数组容量"><a href="#6-转换成树的最小数组容量" class="headerlink" title="6.转换成树的最小数组容量"></a>6.转换成树的最小数组容量</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The smallest table capacity for which bins may be treeified.</span></span><br><span class="line"><span class="comment">     * (Otherwise the table is resized if too many nodes in a bin.)</span></span><br><span class="line"><span class="comment">     * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</span></span><br><span class="line"><span class="comment">     * between resizing and treeification thresholds.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20190615101255704.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzQ1Nzcz,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p><img src="https://img-blog.csdnimg.cn/2019061510140289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzQ1Nzcz,size_16,color_FFFFFF,t_70" alt="img"></p>
+<h3 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> h;</span><br><span class="line">        <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/assets/img/wechart.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -191,16 +254,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/%E5%8F%8D%E5%B0%84/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/21/%E9%9B%86%E5%90%88%E4%B8%93%E9%A2%98/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL底层原理详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -215,212 +337,52 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-23种设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">23种设计模式</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:23:41.440Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>前言 未完待续，持续更新</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap源码阅读"><span class="toc-number">1.</span> <span class="toc-text">HashMap源码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-HashMap的初始容量"><span class="toc-number">1.1.</span> <span class="toc-text">1.HashMap的初始容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-HashMap的最大容量"><span class="toc-number">1.2.</span> <span class="toc-text">2.HashMap的最大容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-装载因子"><span class="toc-number">1.3.</span> <span class="toc-text">3.装载因子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-由链表转换成树的阈值"><span class="toc-number">1.4.</span> <span class="toc-text">4.由链表转换成树的阈值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-由树转换成链表的阈值"><span class="toc-number">1.5.</span> <span class="toc-text">5.由树转换成链表的阈值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-转换成树的最小数组容量"><span class="toc-number">1.6.</span> <span class="toc-text">6.转换成树的最小数组容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7"><span class="toc-number">1.7.</span> <span class="toc-text">7.</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
   
-    <article id="post-注解详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/">注解详解</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:23:20.594Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>注解总结，不清楚的时候可以查询，持续更新！</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/%E6%B3%A8%E8%A7%A3%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mybatis课堂笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/Mybatis%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/">Mybatis课堂笔记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/Mybatis%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2020-04-12T14:53:07.619Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>MyBatis复习笔记</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/Mybatis%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="集合专题" data-title="集合专题" data-url="http://yoursite.com/2020/07/21/%E9%9B%86%E5%90%88%E4%B8%93%E9%A2%98/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -443,8 +405,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
