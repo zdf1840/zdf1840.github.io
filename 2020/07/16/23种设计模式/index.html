@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.assets%5Cimage-20200708155334474.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.assets%5Cimage-20200708163414337.png">
 <meta property="article:published_time" content="2020-07-16T03:23:41.440Z">
-<meta property="article:modified_time" content="2020-07-23T13:06:48.962Z">
+<meta property="article:modified_time" content="2020-07-23T14:05:49.678Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.assets%5Cimage-20200707154952431.png">
@@ -236,7 +236,7 @@
 <li><strong>迪米特法则LoD(Law Of Demeter or Principle of Least Knowledge)：</strong>只与你的直接朋友交谈，不跟“陌生人”说话</li>
 <li><strong>合成复用原则CARP（Composite/Aggregate Reuse Principle）：</strong>尽量使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现</li>
 </ul>
-<h3 id="五、模式详解"><a href="#五、模式详解" class="headerlink" title="五、模式详解"></a>五、模式详解</h3><h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
+<h3 id="五、单例模式"><a href="#五、单例模式" class="headerlink" title="五、单例模式"></a>五、单例模式</h3><p>单例模式（Singleton Pattern）是 Java 中最简单的设计模式之一。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</p>
 <p>这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。</p>
 <p><strong>注意：</strong></p>
 <ul>
@@ -269,7 +269,7 @@
 <li>3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。</li>
 </ul>
 <p><strong>注意事项：</strong>getInstance() 方法中需要使用同步锁 synchronized (Singleton.class) 防止多线程同时进入造成 instance 被多次实例化。</p>
-<h5 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h5><ul>
+<h4 id="1-饿汉式"><a href="#1-饿汉式" class="headerlink" title="1.饿汉式"></a>1.饿汉式</h4><ul>
 <li><p>私有构造器，别人无法new这个对象，保证只有一个</p>
 </li>
 <li><p>一开始就创建，但会浪费内存空间。故引入懒汉式，用的时候再创建</p>
@@ -279,14 +279,14 @@
 
 
 
-<h5 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zdf.single;</span><br><span class="line"></span><br><span class="line"><span class="comment">//懒汉式单例</span></span><br><span class="line"><span class="comment">//线程不安全</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">        lazyMan = <span class="keyword">new</span> LazyMan();<span class="comment">//不是原子性操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazyMan;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-懒汉式"><a href="#2-懒汉式" class="headerlink" title="2.懒汉式"></a>2.懒汉式</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zdf.single;</span><br><span class="line"></span><br><span class="line"><span class="comment">//懒汉式单例</span></span><br><span class="line"><span class="comment">//线程不安全</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">        lazyMan = <span class="keyword">new</span> LazyMan();<span class="comment">//不是原子性操作</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> lazyMan;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>加锁，解决线程安全问题</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zdf.single;</span><br><span class="line"></span><br><span class="line"><span class="comment">//懒汉式单例</span></span><br><span class="line"><span class="comment">/*不安全</span></span><br><span class="line"><span class="comment">lazyMan = new LazyMan();//不是原子性操作</span></span><br><span class="line"><span class="comment"> * 1.分配内存空间</span></span><br><span class="line"><span class="comment"> * 2.执行构造方法，初始化对象</span></span><br><span class="line"><span class="comment"> * 3.把这个对象指向空间</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 可能发生指令重排的现象</span></span><br><span class="line"><span class="comment"> *期望顺序是 123</span></span><br><span class="line"><span class="comment"> *实际是132 即先把空间占用，再等它初始化完</span></span><br><span class="line"><span class="comment"> * 132 A</span></span><br><span class="line"><span class="comment"> * 此时来了个线程B，在A还没初始化完成的时候会认为lazyMan非空，</span></span><br><span class="line"><span class="comment"> *直接走return lazyMan;但空间的东西是没有的，所以要避免指令重排，</span></span><br><span class="line"><span class="comment"> *加个volatile</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (LazyMan<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (lazyMan!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不要试图使用反射破坏"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//双层检测锁模式的懒汉式单例  简称DCL懒汉式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lazyMan == <span class="keyword">null</span>)&#123;<span class="comment">//单线程下确实单例ok,但多线程并发偶尔成功偶尔失败,加个锁</span></span><br><span class="line">            <span class="keyword">synchronized</span> (LazyMan<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    lazyMan = <span class="keyword">new</span> LazyMan();<span class="comment">//不是原子性操作</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//反射破解单例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        LazyMan instance = LazyMan.getInstance();</span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>(<span class="title">null</span>)</span>;</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);<span class="comment">//无视私有</span></span><br><span class="line">        LazyMan instance2 = declaredConstructor.newInstance();</span><br><span class="line"></span><br><span class="line">        System.out.println(instance);</span><br><span class="line">        System.out.println(instance2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p><strong>作用：实现了创建者和调用者的分离</strong></p>
+<h3 id="六、工厂模式"><a href="#六、工厂模式" class="headerlink" title="六、工厂模式"></a>六、工厂模式</h3><p><strong>作用：实现了创建者和调用者的分离</strong></p>
 <p>核心本质：</p>
 <ul>
 <li><strong>实例化对象不使用new，用工厂方法代替</strong></li>
@@ -301,12 +301,10 @@
 <li>工厂方法模式<ul>
 <li>用来生产同一等级结构中的固定产品（支持增加任意产品）</li>
 </ul>
-<ol start="3">
+</li>
 <li>抽象工厂模式<ul>
 <li>围绕一个超级工厂创建其他工厂，该超级工厂又称为其他工厂的工厂</li>
 </ul>
-</li>
-</ol>
 </li>
 </ol>
 <p>满足三个原则：</p>
@@ -318,8 +316,7 @@
 <li><p><strong>迪米特法则：</strong>只与你的直接朋友交谈，不跟“陌生人”说话</p>
 </li>
 </ul>
-<ol>
-<li><p><strong>普通方法</strong></p>
+<p><strong>1.普通方法</strong></p>
 <ol>
 <li><p>首先建一个Car接口</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -335,26 +332,29 @@
 <p> 出现的问题是造车和消费在一起，耦合度高，没有实现创建者和调用者的分离</p>
 </li>
 </ol>
-</li>
-</ol>
-<ol start="2">
-<li><p><strong>简单工厂模式</strong></p>
+<p><strong>2.简单工厂模式</strong></p>
 <ol>
 <li>首先建一个Car接口</li>
 </ol>
-</li>
-</ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​        2. 再写Tesla和WuLing实现类</p>
+
+
+<ol start="2">
+<li>Tesla和WuLing实现类</li>
+</ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLing</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​        3. 再建一个车工厂,在工厂里实现new（造车功能）</p>
+<ol start="3">
+<li>建一个车工厂,在工厂里实现new（造车功能）</li>
+</ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getCar</span><span class="params">(String car)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (car.equals(<span class="string">"五菱"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> WuLing();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (car.equals(<span class="string">"特斯拉"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​        4. 最后通过消费者类实现调用</p>
+<ol start="4">
+<li>最后通过消费者类实现调用</li>
+</ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Car wuLing = <span class="keyword">new</span> CarFactory().getCar(<span class="string">"五菱"</span>);</span><br><span class="line">        Car tesla = <span class="keyword">new</span> CarFactory().getCar(<span class="string">"特斯拉"</span>);</span><br><span class="line"></span><br><span class="line">        wuLing.name();</span><br><span class="line">        tesla.name();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>优点：</strong>同一结构下的车可以直接在工厂内造好再调用给消费者，不用再向以前那样在消费者层造车，销售，实例化对象不使用new，用工厂方法代替，将选择实现类，创建统一管理和控制。从而将调用者跟我们的实现类解耦。</p>
@@ -367,24 +367,12 @@
 <li><p>首先建一个Car接口</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>​    2. 再写Tesla和WuLing实现类</p>
+<p>​    2. 再写Tesla、WuLing和MoBai实现类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLing</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li><p>建一个工厂接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂方法模式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p>给每种车实现一个工厂类</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLingFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>最后实现调用</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Car wuLing = <span class="keyword">new</span> WuLingFactory().getCar();</span><br><span class="line">        Car tesla = <span class="keyword">new</span> TeslaFactory().getCar();</span><br><span class="line">        Car MoBai = <span class="keyword">new</span> MoBaiFactory().getCar();</span><br><span class="line"></span><br><span class="line">        wuLing.name();</span><br><span class="line">        tesla.name();</span><br><span class="line">        MoBai.name();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MoBai</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"摩拜单车"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -392,7 +380,27 @@
 </ol>
 </li>
 </ol>
-<pre><code>    **小结**
+<pre><code> 1. 建一个工厂接口
+
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂方法模式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+2. 给每种车实现一个工厂类
+
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLingFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MoBaiFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MoBai();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+3. 最后实现调用
+
+    <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Car wuLing = <span class="keyword">new</span> WuLingFactory().getCar();</span><br><span class="line">        Car tesla = <span class="keyword">new</span> TeslaFactory().getCar();</span><br><span class="line">        Car MoBai = <span class="keyword">new</span> MoBaiFactory().getCar();</span><br><span class="line"></span><br><span class="line">        wuLing.name();</span><br><span class="line">        tesla.name();</span><br><span class="line">        MoBai.name();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+    **小结**
 
     - **优点：**以后直接从每个车厂里造相应的车，既实现了生产和消费的分离，又遵守了开闭原则（以后添车只要再建个车类和相应的工厂实现类即可）
 
@@ -477,8 +485,8 @@
 </ol>
 </li>
 </ol>
-<h4 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h4><ul>
-<li>建造者农事也属于创建型模式，它提供了一种创建对象的最佳方式。</li>
+<h3 id="七、建造者模式"><a href="#七、建造者模式" class="headerlink" title="七、建造者模式"></a>七、建造者模式</h3><ul>
+<li>建造者同时也属于创建型模式，它提供了一种创建对象的最佳方式。</li>
 <li>定义：将一个复杂对象的构建与他的表示分离，使得同样的构建过程可以创建不同的表示</li>
 <li>主要作用：在用户不知道对象的建造过程和细节的情况下就可以直接创建复杂的对象</li>
 <li>用户只需要给出指定复杂对象的类型和内容，建造者模式负责按顺序创建复杂对象（把内部的建造过程细节隐藏起来）</li>
@@ -547,7 +555,7 @@
 
 </li>
 </ol>
-<h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h4><p>​    原来我们是通过new生产一个对象，现在只要通过new生产出一个原型就好了，后面再需要这样的对象直接通过克隆对象来提高程序的效率，如果一个对象非常复杂的时候可以考虑使用原型模式</p>
+<h3 id="八、原型模式"><a href="#八、原型模式" class="headerlink" title="八、原型模式"></a>八、原型模式</h3><p>​    原来我们是通过new生产一个对象，现在只要通过new生产出一个原型就好了，后面再需要这样的对象直接通过克隆对象来提高程序的效率，如果一个对象非常复杂的时候可以考虑使用原型模式</p>
 <p>​    使用Cloneable接口和clone方法</p>
 <p>​    <strong>demo01:</strong></p>
 <ol>
@@ -578,7 +586,7 @@
 <li><strong>建造者模式：</strong>让对象的创建和使用分离，把一个个对象通过指挥者把他们拼装起来，从而形成复杂对象</li>
 <li><strong>原型模式：</strong>原来我们是通过new生产一个对象，现在只要通过new生产出一个原型就好了，后面再需要这样的对象直接通过克隆对象来提高程序的效率，如果一个对象非常复杂的时候可以考虑使用原型模式</li>
 </ul>
-<h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><ul>
+<h3 id="九、适配器模式"><a href="#九、适配器模式" class="headerlink" title="九、适配器模式"></a>九、适配器模式</h3><ul>
 <li>将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作！</li>
 <li><strong>角色分析</strong><ul>
 <li>目标接口：客户所期待的接口，目标可以是具体的或抽象的类，也可以是接口。</li>
@@ -621,7 +629,7 @@
 
 <p> 我们发现，通过继承的类适配器有很大的局限性，对于Java、c#等不支持多重类继承的与语言，一次最多只能适配一个适配者类，不能同时适配多个适配者，所以需要改用组合的方式（对象适配器）</p>
 </li>
-<li><p>改写适配器，通过组合的形式即使再加几个网线或者其他的什么线都不怕，直接多来几个有参构造器即可</p>
+<li><p>改写适配器，抛弃继承使用<strong>组合</strong>的形式。即使再加几个网线也不怕，多来几个有参构造器即可</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter2</span> <span class="keyword">implements</span> <span class="title">NetToUsb</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Adaptee adapte;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Adapter2</span><span class="params">(Adaptee adaptee)</span></span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.adaptee = adaptee;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlerAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            adapte.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>实现</p>
@@ -631,7 +639,7 @@
 
 </li>
 </ol>
-<h4 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h4><p>桥接模式是将抽象部分与他的实现部分分离，是他们都可以独立的变化。它是一种对象结构模型，又称为柄体（Handle and Body）模式或接口（Interface）模式。</p>
+<h3 id="十、桥接模式"><a href="#十、桥接模式" class="headerlink" title="十、桥接模式"></a>十、桥接模式</h3><p>桥接模式是将抽象部分与他的实现部分分离，使他们都可以独立的变化。它是一种对象结构模型，又称为柄体（Handle and Body）模式或接口（Interface）模式。</p>
 <p><img src="/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.assets%5Cimage-20200708165100433.png" alt="image-20200708165100433"></p>
 <p>代码步骤：</p>
 <ol>
@@ -678,7 +686,7 @@
 <li>JDBC驱动程序也是桥接模式的应用之一</li>
 <li>思考?桥接模式+适配器模式</li>
 </ul>
-<h4 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h4><p>为什么要学习代理模式？因为这是Spring AOP的底层！【SpringAOP和SPringle MVC】</p>
+<h3 id="十一、静态代理"><a href="#十一、静态代理" class="headerlink" title="十一、静态代理"></a>十一、静态代理</h3><p>为什么要学习代理模式？因为这是Spring AOP的底层！【SpringAOP和SPringle MVC】</p>
 <p>代理模式的分类：</p>
 <ul>
 <li>静态代理</li>
@@ -707,7 +715,7 @@
         System.out.println(<span class="string">"房东要出租房子!"</span>);
     }
 }
-&lt;!--￼<span class="number">54</span>--&gt;</code></pre>
+&lt;!--￼<span class="number">56</span>--&gt;</code></pre>
 </li>
 <li><p>客户端访问代理角色</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//房东要租房房子</span></span><br><span class="line">        Host host = <span class="keyword">new</span> Host();</span><br><span class="line">        <span class="comment">//代理，中介代房东租房子，但是代理一般会有一些附属操作，比如看房，收租，签合同</span></span><br><span class="line">        Proxy proxy = <span class="keyword">new</span> Proxy(host);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//你不用面对房东，直接找中介租房即可</span></span><br><span class="line">        proxy.rent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -746,7 +754,7 @@
 </li>
 </ol>
 <p><img src="/2020/07/16/23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5C23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.assets%5Cimage-20200708163414337.png" alt="image-20200708163414337"></p>
-<h4 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h4><ul>
+<h3 id="十二、动态代理"><a href="#十二、动态代理" class="headerlink" title="十二、动态代理"></a>十二、动态代理</h3><ul>
 <li>动态代理和静态代理角色一样</li>
 <li>动态代理的代理类是动态生成的，不是我们直接写好的</li>
 <li>动态代理分为两大类：基于接口的动态代理、基于类的动态代理<ul>
@@ -932,7 +940,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、学习设计模式的意义"><span class="toc-number">1.</span> <span class="toc-text">一、学习设计模式的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、设计模式的基本要素"><span class="toc-number">2.</span> <span class="toc-text">二、设计模式的基本要素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、23种设计模式"><span class="toc-number">3.</span> <span class="toc-text">三、23种设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、OOP七大原则"><span class="toc-number">4.</span> <span class="toc-text">四、OOP七大原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、模式详解"><span class="toc-number">5.</span> <span class="toc-text">五、模式详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单例模式"><span class="toc-number">5.1.</span> <span class="toc-text">单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#饿汉式"><span class="toc-number">5.1.1.</span> <span class="toc-text">饿汉式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#懒汉式"><span class="toc-number">5.1.2.</span> <span class="toc-text">懒汉式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工厂模式"><span class="toc-number">5.2.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#建造者模式"><span class="toc-number">5.3.</span> <span class="toc-text">建造者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#原型模式"><span class="toc-number">5.4.</span> <span class="toc-text">原型模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适配器模式"><span class="toc-number">5.5.</span> <span class="toc-text">适配器模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#桥接模式"><span class="toc-number">5.6.</span> <span class="toc-text">桥接模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代理模式"><span class="toc-number">5.7.</span> <span class="toc-text">代理模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态代理"><span class="toc-number">5.8.</span> <span class="toc-text">动态代理</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、学习设计模式的意义"><span class="toc-number">1.</span> <span class="toc-text">一、学习设计模式的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、设计模式的基本要素"><span class="toc-number">2.</span> <span class="toc-text">二、设计模式的基本要素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、23种设计模式"><span class="toc-number">3.</span> <span class="toc-text">三、23种设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、OOP七大原则"><span class="toc-number">4.</span> <span class="toc-text">四、OOP七大原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、单例模式"><span class="toc-number">5.</span> <span class="toc-text">五、单例模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-饿汉式"><span class="toc-number">5.1.</span> <span class="toc-text">1.饿汉式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-懒汉式"><span class="toc-number">5.2.</span> <span class="toc-text">2.懒汉式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、工厂模式"><span class="toc-number">6.</span> <span class="toc-text">六、工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、建造者模式"><span class="toc-number">7.</span> <span class="toc-text">七、建造者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、原型模式"><span class="toc-number">8.</span> <span class="toc-text">八、原型模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九、适配器模式"><span class="toc-number">9.</span> <span class="toc-text">九、适配器模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十、桥接模式"><span class="toc-number">10.</span> <span class="toc-text">十、桥接模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十一、静态代理"><span class="toc-number">11.</span> <span class="toc-text">十一、静态代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#十二、动态代理"><span class="toc-number">12.</span> <span class="toc-text">十二、动态代理</span></a></li></ol>
                     </div>
                 </span>
             </div>
