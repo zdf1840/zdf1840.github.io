@@ -30,10 +30,10 @@
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-8a065d6e21a2adbf06d2e6b5dd02e969_720w.jpg">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-d9a03627e8e1319e46f42e6963c35e30_720w.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-6e16b355e3d0f05ed8bfb0f7c71de8f1_720w.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png">
-<meta property="og:image" content="http://yoursite.com/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png">
+<meta property="og:image" content="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730185634.png">
+<meta property="og:image" content="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730185635.png">
 <meta property="article:published_time" content="2020-07-19T06:59:58.201Z">
-<meta property="article:modified_time" content="2020-07-24T02:29:48.817Z">
+<meta property="article:modified_time" content="2020-07-30T10:56:37.153Z">
 <meta property="article:author" content="柒月笙歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-1cc416d59d4c44cf029e9e2103347bb8_720w.jpg">
@@ -65,7 +65,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="/assets/img/head_portrait.jpg" class="js-avatar">
+			<img src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730190408.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">柒月笙歌</a></h1>
@@ -124,7 +124,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="/assets/img/head_portrait.jpg" class="js-avatar">
+				<img src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730190408.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">柒月笙歌</h1>
@@ -298,8 +298,8 @@
 <li><p><strong>InnoDB是聚集索引，</strong>使用B+Tree作为索引结构，<strong>数据文件是和（主键）索引绑在一起的</strong>（表数据文件本身就是按B+Tree组织的一个索引结构），<strong>必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。</strong>因此，主键不应该过大，因为主键太大，其他索引也都会很大。</p>
 <p><strong>MyISAM是非聚集索引，</strong>也是使用B+Tree作为索引结构，<strong>索引和数据文件是分离的</strong>，索引保存的是数据文件的指针。主键索引和辅助索引是独立的。</p>
 <p>也就是说：<strong>InnoDB的B+树主键索引的叶子节点就是数据文件，辅助索引的叶子节点是主键的值；而MyISAM的B+树主键索引和辅助索引的叶子节点都是数据文件的地址指针。</strong></p>
-<p><img src="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753224.png" alt></p>
-<p><img src="/2020/07/19/MySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/C:%5CUsers%5CAdministrator%5CDesktop%5Cjava%E9%9D%A2%E8%AF%95%E9%A2%98%5CMySQL%5CMySQL%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3.assets%5C20180923094753230.png" alt></p>
+<p><img src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730185634.png" alt></p>
+<p><img src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730185635.png" alt></p>
 </li>
 <li><p><strong>InnoDB不保存表的具体行数</strong>，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快（注意不能加有任何WHERE条件）；</p>
 <p><strong>那么为什么InnoDB没有了这个变量呢？</strong></p>
@@ -354,13 +354,13 @@
                   <div class="reward-box">
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/alipay.jpg">
+                      <img class="reward-img" src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730190410.jpg">
                       <span class="reward-type">支付宝</span>
                     </div>
                     
                     
                     <div class="reward-box-item">
-                      <img class="reward-img" src="/assets/img/wechart.png">
+                      <img class="reward-img" src="https://gitee.com/zdf1840/picture/raw/master/img/img/20200730190409.png">
                       <span class="reward-type">微信</span>
                     </div>
                     
