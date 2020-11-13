@@ -157,6 +157,206 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法考前笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/">算法考前笔记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2020-11-13T14:59:41.286Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、稳定匹配算法"><a href="#一、稳定匹配算法" class="headerlink" title="一、稳定匹配算法"></a>一、稳定匹配算法</h3><blockquote>
+<p>问题引入</p>
+</blockquote>
+<p>现在有N位男生和N位女生，每个男生都对N个女生的喜欢程度做了排序，每个女生都对N个男生的喜欢程度做了排序，现在需要确定一个稳定的约会状态。</p>
+<p>稳定的定义：如果男生i和女生a牵手，但男生i对女生b更喜欢，而女生b发现，相比自己的男朋友j，她更喜欢男生i，则没有力量阻碍男生i和女生b的私奔，这即是不稳定的。</p>
+<blockquote>
+<p>解决思路</p>
+</blockquote>
+<ul>
+<li><strong>首先选择一个单身男生，他会按照他的喜欢程度对一个还没有表白过的女生表白。</strong></li>
+<li><strong>如果女生此时处于单身状态，则恭喜，他们两人将进入约会状态。</strong></li>
+<li><strong>如果女生已经有男朋友，则女生会比较当前男朋友与表白的男生，如果更喜欢表白的男生，则恭喜，男生成功上位，女生之间的男朋友则进入单身状态；若女生还是更喜欢自己的男朋友，则不好意思，男生表白失败。</strong></li>
+<li><strong>当所有的男生都脱离单身状态时，此时的约会状态应是稳定的，证明如下。</strong></li>
+</ul>
+<p>若存在之前描述的不稳定因素，即虽然男生i和女生a牵手，但男生i对女生b更喜欢，而女生b发现，相比自己的男朋友j，她更喜欢男生i。既然男生i更喜欢女生b，那么男生i肯定在对女生b表白失败之后才会对女生a表白，而若男生i对女生b的表白失败，则女生b至少有比对男生i更喜欢的男朋友，所以女生b相比自己的男朋友j更喜欢男生i并不成立，所以此时所有的约会状态都是稳定的。</p>
+<h3 id="二、求递归算法时间复杂度"><a href="#二、求递归算法时间复杂度" class="headerlink" title="二、求递归算法时间复杂度"></a>二、求递归算法时间复杂度</h3><p>大道尽在其中：<a href="https://www.cnblogs.com/wu8685/archive/2010/12/21/1912347.html" target="_blank" rel="noopener">https://www.cnblogs.com/wu8685/archive/2010/12/21/1912347.html</a></p>
+<h3 id="三、贪心算法的证明"><a href="#三、贪心算法的证明" class="headerlink" title="三、贪心算法的证明"></a>三、贪心算法的证明</h3><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113082744013.png" alt="image-20201113082744013"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113202716539.png" alt="image-20201113202716539"></p>
+<p><a href="https://blog.csdn.net/weixin_44550963/article/details/107282087" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44550963/article/details/107282087</a></p>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><h4 id="1-最长递增子序列"><a href="#1-最长递增子序列" class="headerlink" title="1. 最长递增子序列"></a>1. 最长递增子序列</h4><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113221519393.png" alt="image-20201113221519393"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113214417253.png" alt="image-20201113214417253"></p>
+<h4 id="2-爬楼梯问题"><a href="#2-爬楼梯问题" class="headerlink" title="2. 爬楼梯问题"></a>2. 爬楼梯问题</h4><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113215728034.png" alt="image-20201113215728034"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113215816718.png" alt="image-20201113215816718"></p>
+<h4 id="3-最大子序和"><a href="#3-最大子序和" class="headerlink" title="3. 最大子序和"></a>3. 最大子序和</h4><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113220011216.png" alt="image-20201113220011216"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/8fec91e89a69d8695be2974de14b74905fcd60393921492bbe0338b0a628fd9a-Picture1.png" alt="Picture1.png"></p>
+<h4 id="4-机器人迷路"><a href="#4-机器人迷路" class="headerlink" title="4.机器人迷路"></a>4.机器人迷路</h4><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113220235906.png" alt="image-20201113220235906"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/20200711134349993.png" alt="在这里插入图片描述"></p>
+<h4 id="5-最短编辑距离"><a href="#5-最短编辑距离" class="headerlink" title="5. 最短编辑距离"></a>5. 最短编辑距离</h4><p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113221742820.png" alt="image-20201113221742820"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113222021740.png" alt="image-20201113222021740"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113222600023.png" alt="image-20201113222600023"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113222030178.png" alt="image-20201113222030178"></p>
+<h4 id="6-高楼扔鸡蛋"><a href="#6-高楼扔鸡蛋" class="headerlink" title="6. 高楼扔鸡蛋"></a>6. 高楼扔鸡蛋</h4><p>题目是这样：你面前有一栋从 1 到 <code>N</code> 共 <code>N</code>层的楼，然后给你 <code>K</code> 个鸡蛋（<code>K</code> 至少为 1）。现在确定这栋楼存在楼层 <code>0 &lt;= F &lt;= N</code>，在这层楼将鸡蛋扔下去，鸡蛋<strong>恰好没摔碎</strong>（高于 <code>F</code> 的楼层都会碎，低于 <code>F</code> 的楼层都不会碎）。现在问你，<strong>最坏</strong>情况下，你<strong>至少</strong>要扔几次鸡蛋，才能<strong>确定</strong>这个楼层 <code>F</code> 呢？</p>
+<p><strong>如果鸡蛋碎了</strong>，那么鸡蛋的个数 <code>K</code> 应该减一，搜索的楼层区间应该从 <code>[1..N]</code> 变为 <code>[1..i-1]</code> 共 <code>i-1</code> 层楼；</p>
+<p><strong>如果鸡蛋没碎</strong>，那么鸡蛋的个数 <code>K</code> 不变，搜索的楼层区间应该从 <code>[1..N]</code> 变为 <code>[i+1..N]</code>共 <code>N-i</code> 层楼。</p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113223104475.png" alt="image-20201113223104475"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113223126249.png" alt="image-20201113223126249"></p>
+<p><img src="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/image-20201113223144181.png" alt="image-20201113223144181"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/13/%E7%AE%97%E6%B3%95%E8%80%83%E5%89%8D%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-java list,set,map,数组间的相互转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/06/java%20list,set,map,%E6%95%B0%E7%BB%84%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/">java list,set,map,数组间的相互转换</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/06/java%20list,set,map,%E6%95%B0%E7%BB%84%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
+  	<time datetime="2020-09-06T11:35:42.465Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="java-list-set-map-数组间的相互转换"><a href="#java-list-set-map-数组间的相互转换" class="headerlink" title="java list,set,map,数组间的相互转换"></a><strong>java list,set,map,数组间的相互转换</strong></h2><p><strong>1.list转set</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set set = <span class="keyword">new</span> HashSet(<span class="keyword">new</span> ArrayList());</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.set转list</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List list = <span class="keyword">new</span> ArrayList(<span class="keyword">new</span> HashSet());</span><br></pre></td></tr></table></figure>
+
+<p> <strong>3.数组转为list</strong></p>
+<ol>
+<li>最常见方式（未必最佳）</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] arr = &#123;<span class="string">"1"</span>,<span class="string">"2"</span>&#125;;</span><br><span class="line">List list = Arrays.asList(arr);</span><br></pre></td></tr></table></figure>
+
+<p>注意：此时的list不能进行add操作，否则会报 “java.lang.UnsupportedOperationException”，Arrays.asList()返回的是List,而且是一个定 长的List，所以不能转换为ArrayList，只能转换为AbstractList</p>
+<p>原因在于asList()方法返回的是某个数组的列表形式,返回的列表只是数组的另一个视图,而数组本身并没有消失,对列表的任何操作最终都反映在数组上. 所以不支持remove,add方法的 </p>
+<p><code>Arrays.asList(strArray)</code>返回值是<code>java.util.Arrays</code>类中一个私有静态内部类<code>java.util.Arrays.ArrayList</code>，它并非<code>java.util.ArrayList</code>类。<code>java.util.Arrays.ArrayList</code>类具有 set()，get()，contains()等方法，但是不具有添加<code>add()</code>或删除<code>remove()</code>方法,所以调用<code>add()</code>方法会报错。</p>
+<p><strong>使用场景</strong>：<code>Arrays.asList(strArray)</code>方式仅能用在将数组转换为List后，不需要增删其中的值，仅作为数据源读取使用。</p>
+<ol start="2">
+<li>数组转为List后，支持增删改查的方式</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] strArray = <span class="keyword">new</span> String[<span class="number">2</span>];</span><br><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(strArray)) ;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>使用场景</strong>：需要在将数组转换为List后，对List进行增删改查操作，在List的数据量不大的情况下，可以使用。</p>
+<ol start="3">
+<li>通过集合工具类Collections.addAll()方法(最高效)</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String[] strArray1 = <span class="keyword">new</span> String[<span class="number">2</span>];</span><br><span class="line">       ArrayList&lt; String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;String&gt;(strArray1.length);</span><br><span class="line">       Collections.addAll(arrayList, strArray1);</span><br><span class="line">       arrayList.add(<span class="string">"1"</span>);</span><br><span class="line">       System.out.println(arrayList);</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.list转为数组</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List list = Arrays.asList(<span class="string">"a"</span>,<span class="string">"b"</span>);<span class="comment">//数组转list</span></span><br><span class="line">String[] arr = (String[])list.toArray(<span class="keyword">new</span> String[list.size()]); <span class="comment">//list转数组</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>5.数组转为set</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> [] a = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;; </span><br><span class="line">Set set =<span class="keyword">new</span> HashSet(Arrays.asList(a));</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.set转数组</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] staffs = <span class="keyword">new</span> String[]&#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>&#125;;</span><br><span class="line">Set&lt;String&gt; ss = <span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(staffs));</span><br></pre></td></tr></table></figure>
+
+<p><strong>7.map的相关操作。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Map map = <span class="keyword">new</span> HashMap();</span><br><span class="line">map.put(<span class="string">"1"</span>,<span class="string">"a"</span>);</span><br><span class="line">map.put(<span class="string">'2'</span>,<span class="string">'b'</span>);</span><br><span class="line">map.put(<span class="string">'3'</span>,<span class="string">'c'</span>);</span><br><span class="line">System.out.println(map);</span><br><span class="line"><span class="comment">// 输出所有的值 </span></span><br><span class="line">System.out.println(map.keySet());</span><br><span class="line"><span class="comment">// 输出所有的键 </span></span><br><span class="line">System.out.println(map.values());</span><br><span class="line"><span class="comment">// 将map的值转化为List </span></span><br><span class="line">List list = <span class="keyword">new</span> ArrayList(map.values()); </span><br><span class="line">System.out.println(list);</span><br><span class="line"><span class="comment">// 将map的值转化为Set </span></span><br><span class="line">Set set = <span class="keyword">new</span> HashSet(map.values()); </span><br><span class="line">System.out.println(set);</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/06/java%20list,set,map,%E6%95%B0%E7%BB%84%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-分布式锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -648,136 +848,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/19/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Cookie&amp;Session" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/Cookie&Session/">Cookie&amp;Session</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/19/Cookie&Session/" class="archive-article-date">
-  	<time datetime="2020-07-19T06:42:04.953Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Cookie&amp;和Session  一对好基友</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/19/Cookie&Session/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Object对象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/">Object对象</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/" class="archive-article-date">
-  	<time datetime="2020-07-16T03:24:29.376Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Object详解</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/Object%E5%AF%B9%E8%B1%A1/">展开全文 >></a>
         </p>
       
 
